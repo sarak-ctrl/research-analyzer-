@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ResearchLab — Data Analysis Tool</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
 
-        <header>
-            <div>
-                <h1>Research<span>Lab</span></h1>
-                <p>Academic Data Analysis &amp; Results Generator</p>
-            </div>
-            <div class="badge">LOCAL TOOL - NO DATA SENT ANYWHERE</div>
-        </header>
+  <header>
+    <div>
+      <h1>Research<span>Lab</span></h1>
+      <p>Academic Data Analysis &amp; Results Generator</p>
+    </div>
+    <div class="badge">LOCAL TOOL — NO DATA SENT ANYWHERE</div>
+  </header>
 
-        <div class="tab-bar">
-            <button class="tab active" onclick="switchTab('quantitative')">📊 Quantitative</button>
-            <button class="tab" onclick="switchTab('qualitative')">📝 Qualitative</button>
-            <button class="tab" onclick="switchTab('paper')">📄 Paper Results</button>
-        </div>
-    
-         <main>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('quantitative')">📊 Quantitative</button>
+    <button class="tab" onclick="switchTab('qualitative')">📝 Qualitative</button>
+    <button class="tab" onclick="switchTab('paper')">📄 Paper Results</button>
+  </div>
 
-    <!-- QUANTITATIVE -->
+  <main>
+
+    <!-- ===== QUANTITATIVE ===== -->
     <div id="panel-quantitative" class="panel active">
       <div class="panel-intro">
         <h2>Quantitative Data Analysis</h2>
-        <p>Enter your summarized counts per answer. The tool computes exact percentages and writes academic-style results.</p>
+        <p>Enter your summarized counts per answer. The tool computes exact percentages, generates written academic results, and produces high-quality figures.</p>
       </div>
 
       <div class="card">
@@ -68,48 +69,58 @@
       </div>
 
       <div class="card">
-        <div class="section-title">Demographic Profile <small style="font-weight:400;font-size:0.8rem;color:#888;">(optional)</small></div>
-        <p class="hint">Add respondent demographics (e.g., Sex, Age Group, Year Level).</p>
+        <div class="section-title">Demographic Profile <small style="font-weight:400;font-size:0.8rem;color:#999;">(optional)</small></div>
+        <p class="hint">Add respondent demographics — a pie chart will be generated for each category.</p>
         <div id="demo-container"></div>
         <button class="btn btn-outline" onclick="addDemographic()">+ Add Demographic Category</button>
       </div>
 
       <div class="card">
         <div class="section-title">Survey Questions &amp; Responses</div>
-        <p class="hint">Add each question, then enter each answer option and the count of respondents who chose it.</p>
+        <p class="hint">Add each question. A bar chart and pie chart will be generated per question.</p>
         <div id="q-questions-container"></div>
         <button class="btn btn-outline" onclick="addQuestion()">+ Add Question</button>
       </div>
 
       <div class="card" id="likert-card" style="display:none;">
         <div class="section-title">Likert Scale Statements</div>
-        <p class="hint">Add each statement and enter the count of respondents per rating.</p>
+        <p class="hint">Add each statement. A stacked horizontal bar chart will be generated.</p>
         <div id="likert-container"></div>
         <button class="btn btn-outline" onclick="addLikertItem()">+ Add Statement</button>
       </div>
 
       <div class="action-bar">
-        <button class="btn btn-primary" onclick="generateQuantitative()">⚙ Generate Quantitative Results</button>
+        <button class="btn btn-primary" onclick="generateQuantitative()">⚙ Generate Results &amp; Figures</button>
         <button class="btn btn-secondary" onclick="clearQuantitative()">Clear All</button>
       </div>
 
+      <!-- TEXT OUTPUT -->
       <div id="q-output" class="output-area" style="display:none;">
         <div class="output-header">
           <span>GENERATED RESULTS — QUANTITATIVE</span>
           <div class="output-btns">
-            <button class="btn btn-sm" onclick="copyOutput('q-output-text')">📋 Copy</button>
-            <button class="btn btn-sm" onclick="sendToPaper('quantitative')">➕ Send to Paper Tab</button>
+            <button class="btn btn-sm" onclick="copyOutput('q-output-text')">📋 Copy Text</button>
+            <button class="btn btn-sm" onclick="sendToPaper('quantitative')">➕ Send to Paper</button>
           </div>
         </div>
         <div id="q-output-text" class="output-text"></div>
       </div>
+
+      <!-- CHARTS OUTPUT -->
+      <div id="q-charts" style="display:none;">
+        <div class="charts-header">
+          <span>📈 Generated Figures</span>
+          <button class="btn btn-download" onclick="downloadAllCharts()">⬇ Download All Figures</button>
+        </div>
+        <div id="q-charts-grid" class="charts-grid"></div>
+      </div>
     </div>
 
-    <!-- QUALITATIVE -->
+    <!-- ===== QUALITATIVE ===== -->
     <div id="panel-qualitative" class="panel">
       <div class="panel-intro">
         <h2>Qualitative Data Analysis</h2>
-        <p>Paste individual participant responses. The tool identifies themes and writes a thematic analysis section.</p>
+        <p>Paste individual participant responses. The tool identifies themes, writes thematic analysis, and generates a theme frequency chart.</p>
       </div>
 
       <div class="card">
@@ -155,7 +166,7 @@
       </div>
 
       <div class="action-bar">
-        <button class="btn btn-primary" onclick="generateQualitative()">⚙ Generate Qualitative Results</button>
+        <button class="btn btn-primary" onclick="generateQualitative()">⚙ Generate Results &amp; Figures</button>
         <button class="btn btn-secondary" onclick="clearQualitative()">Clear All</button>
       </div>
 
@@ -163,19 +174,27 @@
         <div class="output-header">
           <span>GENERATED RESULTS — QUALITATIVE</span>
           <div class="output-btns">
-            <button class="btn btn-sm" onclick="copyOutput('ql-output-text')">📋 Copy</button>
-            <button class="btn btn-sm" onclick="sendToPaper('qualitative')">➕ Send to Paper Tab</button>
+            <button class="btn btn-sm" onclick="copyOutput('ql-output-text')">📋 Copy Text</button>
+            <button class="btn btn-sm" onclick="sendToPaper('qualitative')">➕ Send to Paper</button>
           </div>
         </div>
         <div id="ql-output-text" class="output-text"></div>
       </div>
+
+      <div id="ql-charts" style="display:none;">
+        <div class="charts-header">
+          <span>📈 Generated Figures</span>
+          <button class="btn btn-download" onclick="downloadAllQlCharts()">⬇ Download All Figures</button>
+        </div>
+        <div id="ql-charts-grid" class="charts-grid"></div>
+      </div>
     </div>
 
-    <!-- PAPER -->
+    <!-- ===== PAPER ===== -->
     <div id="panel-paper" class="panel">
       <div class="panel-intro">
         <h2>Full Results Section</h2>
-        <p>Combine your quantitative and qualitative results into one complete section, ready to paste into your paper.</p>
+        <p>Compile your results into one complete section ready to paste into your paper.</p>
       </div>
 
       <div class="card">
@@ -205,7 +224,7 @@
       <div class="card">
         <div class="section-title">Compiled Results Preview</div>
         <div id="paper-content" class="paper-area">
-          <p class="hint-center">Generate results from the Quantitative and/or Qualitative tabs, then click "Send to Paper Tab" to see them compiled here.</p>
+          <p class="hint-center">Generate results from the other tabs, then click "Send to Paper" to compile them here.</p>
         </div>
       </div>
 
@@ -231,7 +250,7 @@
   <div id="toast" class="toast"></div>
 
   <footer>
-    <p>ResearchLab &mdash; All computation is done locally in your browser. Nothing is sent to any server.</p>
+    <p>ResearchLab &mdash; All computation and chart generation is done locally in your browser. Nothing is sent to any server.</p>
   </footer>
 
   <script src="app.js"></script>
