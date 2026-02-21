@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResearchLab — Data Analysis Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+
+        <header>
+            <div>
+                <h1>Research<span>Lab</span></h1>
+                <p>Academic Data Analysis &amp; Results Generator</p>
+            </div>
+            <div class="badge">LOCAL TOOL - NO DATA SENT ANYWHERE</div>
+        </header>
+
+        <div class="tab-bar">
+            <button class="tab active" onclick="switchTab('quantitative')">📊 Quantitative</button>
+            <button class="tab" onclick="switchTab('qualitative')">📝 Qualitative</button>
+            <button class="tab" onclick="switchTab('paper')">📄 Paper Results</button>
+        </div>
+    
+         <main>
+
+    <!-- QUANTITATIVE -->
+    <div id="panel-quantitative" class="panel active">
+      <div class="panel-intro">
+        <h2>Quantitative Data Analysis</h2>
+        <p>Enter your summarized counts per answer. The tool computes exact percentages and writes academic-style results.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Study Information</div>
+        <div class="row">
+          <div>
+            <label>Research / Study Title</label>
+            <input type="text" id="q-title" placeholder="e.g., Survey on Student Mental Health Awareness" />
+          </div>
+          <div>
+            <label>Total Number of Respondents (N)</label>
+            <input type="number" id="q-total" placeholder="e.g., 360" min="1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Data Collection Method</label>
+            <select id="q-method">
+              <option>Survey / Questionnaire</option>
+              <option>Structured Interview</option>
+              <option>Observation</option>
+              <option>Experiment</option>
+              <option>Census / Record Review</option>
+            </select>
+          </div>
+          <div>
+            <label>Scale / Measurement Type</label>
+            <select id="q-scale" onchange="toggleLikertCard()">
+              <option value="nominal">Nominal (Yes/No, Categories)</option>
+              <option value="likert">Likert Scale (1–5)</option>
+              <option value="frequency">Frequency (Always–Never)</option>
+              <option value="multiple">Multiple Choice</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Demographic Profile <small style="font-weight:400;font-size:0.8rem;color:#888;">(optional)</small></div>
+        <p class="hint">Add respondent demographics (e.g., Sex, Age Group, Year Level).</p>
+        <div id="demo-container"></div>
+        <button class="btn btn-outline" onclick="addDemographic()">+ Add Demographic Category</button>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Survey Questions &amp; Responses</div>
+        <p class="hint">Add each question, then enter each answer option and the count of respondents who chose it.</p>
+        <div id="q-questions-container"></div>
+        <button class="btn btn-outline" onclick="addQuestion()">+ Add Question</button>
+      </div>
+
+      <div class="card" id="likert-card" style="display:none;">
+        <div class="section-title">Likert Scale Statements</div>
+        <p class="hint">Add each statement and enter the count of respondents per rating.</p>
+        <div id="likert-container"></div>
+        <button class="btn btn-outline" onclick="addLikertItem()">+ Add Statement</button>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn btn-primary" onclick="generateQuantitative()">⚙ Generate Quantitative Results</button>
+        <button class="btn btn-secondary" onclick="clearQuantitative()">Clear All</button>
+      </div>
+
+      <div id="q-output" class="output-area" style="display:none;">
+        <div class="output-header">
+          <span>GENERATED RESULTS — QUANTITATIVE</span>
+          <div class="output-btns">
+            <button class="btn btn-sm" onclick="copyOutput('q-output-text')">📋 Copy</button>
+            <button class="btn btn-sm" onclick="sendToPaper('quantitative')">➕ Send to Paper Tab</button>
+          </div>
+        </div>
+        <div id="q-output-text" class="output-text"></div>
+      </div>
+    </div>
+
+    <!-- QUALITATIVE -->
+    <div id="panel-qualitative" class="panel">
+      <div class="panel-intro">
+        <h2>Qualitative Data Analysis</h2>
+        <p>Paste individual participant responses. The tool identifies themes and writes a thematic analysis section.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Study Information</div>
+        <div class="row">
+          <div>
+            <label>Research Topic / Question</label>
+            <input type="text" id="ql-topic" placeholder="e.g., Challenges faced by students during online learning" />
+          </div>
+          <div>
+            <label>Total Number of Participants</label>
+            <input type="number" id="ql-participants" placeholder="e.g., 12" min="1" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Data Collection Method</label>
+            <select id="ql-method">
+              <option>In-depth Interview</option>
+              <option>Focus Group Discussion</option>
+              <option>Open-ended Survey</option>
+              <option>Participant Observation</option>
+              <option>Document / Artifact Analysis</option>
+            </select>
+          </div>
+          <div>
+            <label>Analysis Approach</label>
+            <select id="ql-approach">
+              <option>Thematic Analysis</option>
+              <option>Content Analysis</option>
+              <option>Narrative Analysis</option>
+              <option>Grounded Theory</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Participant Responses</div>
+        <p class="hint">Enter each participant's response individually. Use P1, P2... or pseudonyms as labels.</p>
+        <div id="ql-responses-container"></div>
+        <button class="btn btn-outline" onclick="addResponse()">+ Add Participant Response</button>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn btn-primary" onclick="generateQualitative()">⚙ Generate Qualitative Results</button>
+        <button class="btn btn-secondary" onclick="clearQualitative()">Clear All</button>
+      </div>
+
+      <div id="ql-output" class="output-area" style="display:none;">
+        <div class="output-header">
+          <span>GENERATED RESULTS — QUALITATIVE</span>
+          <div class="output-btns">
+            <button class="btn btn-sm" onclick="copyOutput('ql-output-text')">📋 Copy</button>
+            <button class="btn btn-sm" onclick="sendToPaper('qualitative')">➕ Send to Paper Tab</button>
+          </div>
+        </div>
+        <div id="ql-output-text" class="output-text"></div>
+      </div>
+    </div>
+
+    <!-- PAPER -->
+    <div id="panel-paper" class="panel">
+      <div class="panel-intro">
+        <h2>Full Results Section</h2>
+        <p>Combine your quantitative and qualitative results into one complete section, ready to paste into your paper.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Paper Details</div>
+        <div class="row">
+          <div>
+            <label>Research / Paper Title</label>
+            <input type="text" id="paper-title" placeholder="e.g., A Study on Mental Health Awareness Among College Students" />
+          </div>
+          <div>
+            <label>Author Name(s)</label>
+            <input type="text" id="paper-author" placeholder="e.g., Juan Dela Cruz" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Institution / School</label>
+            <input type="text" id="paper-institution" placeholder="e.g., University of the Philippines" />
+          </div>
+          <div>
+            <label>Year</label>
+            <input type="text" id="paper-date" placeholder="e.g., 2025" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Compiled Results Preview</div>
+        <div id="paper-content" class="paper-area">
+          <p class="hint-center">Generate results from the Quantitative and/or Qualitative tabs, then click "Send to Paper Tab" to see them compiled here.</p>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn btn-primary" onclick="compilePaper()">📄 Compile Full Results Section</button>
+        <button class="btn btn-secondary" onclick="copyPaper()">📋 Copy All</button>
+        <button class="btn btn-secondary" onclick="clearPaper()">🗑 Clear</button>
+      </div>
+
+      <div id="paper-output" class="output-area" style="display:none;">
+        <div class="output-header">
+          <span>FULL RESULTS SECTION — READY FOR YOUR PAPER</span>
+          <div class="output-btns">
+            <button class="btn btn-sm" onclick="copyOutput('paper-final-text')">📋 Copy</button>
+          </div>
+        </div>
+        <div id="paper-final-text" class="output-text"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <footer>
+    <p>ResearchLab &mdash; All computation is done locally in your browser. Nothing is sent to any server.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
