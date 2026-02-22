@@ -446,6 +446,56 @@ footer {
   .charts-grid { grid-template-columns: 1fr; }
 }
 
+/* ── PALETTE PICKER ── */
+.palette-preview {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  min-height: 32px;
+}
+
+.palette-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  display: inline-block;
+}
+
+.custom-color-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.custom-color-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.custom-color-wrap input[type="color"] {
+  width: 40px;
+  height: 40px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.custom-color-wrap button {
+  font-size: 0.65rem;
+  color: #c0392b;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
 
 
