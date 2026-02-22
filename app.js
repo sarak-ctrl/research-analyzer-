@@ -13,12 +13,19 @@ var qlChartInstances = [];
 var figureCounter = 0;
 
 // ── Beautiful color palettes ──
-var PALETTE_MAIN = [
-  '#2E4057','#048A81','#54C6EB','#8EE3EF','#CAF0F8',
-  '#E76F51','#F4A261','#E9C46A','#264653','#2A9D8F'
-];
-var PALETTE_LIKERT = ['#1a535c','#4ecdc4','#ffe66d','#ff6b6b','#c0392b'];
-var PALETTE_DEMO   = ['#6a4c93','#1982c4','#8ac926','#ff595e','#ffca3a','#6a4c93'];
+var PALETTES = {
+  blackwhite: ['#000000','#444444','#777777','#aaaaaa','#cccccc','#e8e8e8','#111111','#555555','#999999','#dddddd'],
+  classic:    ['#003f88','#0077b6','#00b4d8','#90e0ef','#caf0f8','#023e8a','#48cae4','#ade8f4','#0096c7','#0077b6'],
+  warm:       ['#c1121f','#e85d04','#f48c06','#faa307','#ffba08','#dc2f02','#e85d04','#f48c06','#faa307','#ffba08'],
+  cool:       ['#1b4332','#2d6a4f','#40916c','#52b788','#74c69d','#95d5b2','#b7e4c7','#d8f3dc','#1b4332','#2d6a4f'],
+  pastel:     ['#ffadad','#ffd6a5','#fdffb6','#caffbf','#9bf6ff','#a0c4ff','#bdb2ff','#ffc6ff','#ffadad','#ffd6a5'],
+  bold:       ['#e63946','#2a9d8f','#e9c46a','#264653','#f4a261','#023047','#8ecae6','#219ebc','#fb8500','#ffb703']
+};
+var PALETTE_MAIN   = PALETTES.blackwhite;
+var PALETTE_LIKERT = PALETTES.blackwhite.slice(0, 5);
+var PALETTE_DEMO   = PALETTES.blackwhite.slice(0, 6);
+var customColors   = ['#000000','#444444','#777777','#aaaaaa','#cccccc','#333333'];
+var customColorCount = 6;
 
 // ============================================================
 //  TAB SWITCHING
@@ -888,4 +895,68 @@ function showToast(msg) {
   toast.textContent = msg;
   toast.classList.add('show');
   setTimeout(function() { toast.classList.remove('show'); }, 2600);
+}
+
+function updatePalettePreview() {
+  var val     = document.getElementById('chart-palette').value;
+  var preview = document.getElementById('palette-preview');
+  var customC = document.getElementById('custom-colors-container');
+
+  if (val === 'custom') {
+    customC.style.display = 'block';
+    renderCustomPickers();
+    applyCustomPalette();
+  } else {
+    customC.style.display = 'none';
+    var colors = PALETTES[val];
+    PALETTE_MAIN   = colors;
+    PALETTE_LIKERT = colors.slice(0, 5);
+    PALETTE_DEMO   = colors.slice(0, 6);
+    preview.innerHTML = colors.map(function(c) {
+      return '<span class="palette-swatch" style="background:' + c + ';"></span>';
+    }).join('');
+  }
+}
+
+function applyCustomPalette() {
+  var colors = customColors.slice();
+  PALETTE_MAIN   = colors;
+  PALETTE_LIKERT = colors.slice(0, 5);
+  PALETTE_DEMO   = colors.slice(0, 6);
+  var preview = document.getElementById('palette-preview');
+  preview.innerHTML = colors.map(function(c) {
+    return '<span class="palette-swatch" style="background:' + c + ';"></span>';
+  }).join('');
+}
+
+function renderCustomPickers() {
+  var container = document.getElementById('custom-color-pickers');
+  container.innerHTML = '';
+  customColors.forEach(function(color, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'custom-color-wrap';
+    wrap.innerHTML =
+      '<input type="color" value="' + color + '" onchange="updateCustomColor(' + i + ', this.value)" />' +
+      '<button onclick="removeCustomColor(' + i + ')">✕</button>';
+    container.appendChild(wrap);
+  });
+}
+
+function addCustomColor() {
+  if (customColors.length >= 10) { showToast('Maximum 10 colors allowed.'); return; }
+  customColors.push('#000000');
+  renderCustomPickers();
+  applyCustomPalette();
+}
+
+function updateCustomColor(index, value) {
+  customColors[index] = value;
+  applyCustomPalette();
+}
+
+function removeCustomColor(index) {
+  if (customColors.length <= 2) { showToast('Minimum 2 colors required.'); return; }
+  customColors.splice(index, 1);
+  renderCustomPickers();
+  applyCustomPalette();
 }
