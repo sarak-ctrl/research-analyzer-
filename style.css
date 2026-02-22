@@ -49,8 +49,8 @@ header h1 span { color: #aaaaaa !important; }
 header p { font-size: 0.78rem; color: #bbbbbb; font-style: italic; margin-top: 0.1rem; }
 
 .badge {
-  background: var(--gold);
-  color: var(--ink);
+  background: #aaaaaa;
+  color: #ffffff;
   font-family: Arial, sans-serif;
   font-size: 0.65rem;
   padding: 0.28rem 0.75rem;
@@ -496,6 +496,7 @@ footer {
   border: none;
   cursor: pointer;
 }
+
 
 
 
