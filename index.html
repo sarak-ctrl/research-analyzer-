@@ -88,6 +88,29 @@
         <button class="btn btn-outline" onclick="addLikertItem()">+ Add Statement</button>
       </div>
 
+      <div class="card">
+  <div class="section-title">Figure Color Scheme</div>
+  <p class="hint">Choose a color palette for your generated charts and figures.</p>
+  <div class="chart-type-row">
+    <label>Select Palette:</label>
+    <select id="chart-palette" onchange="updatePalettePreview()">
+      <option value="blackwhite">Black &amp; White / Grayscale</option>
+      <option value="classic">Classic (Blue tones)</option>
+      <option value="warm">Warm (Red, Orange, Yellow)</option>
+      <option value="cool">Cool (Green, Teal, Blue)</option>
+      <option value="pastel">Pastel (Soft tones)</option>
+      <option value="bold">Bold (High contrast)</option>
+      <option value="custom">Custom (Pick my own colors)</option>
+    </select>
+  </div>
+  <div id="palette-preview" class="palette-preview"></div>
+  <div id="custom-colors-container" style="display:none;">
+    <p class="hint" style="margin-top:0.5rem;">Click each swatch to pick a color. Add up to 10.</p>
+    <div id="custom-color-pickers" class="custom-color-row"></div>
+    <button class="add-option-btn" onclick="addCustomColor()">+ Add Color</button>
+  </div>
+</div>
+      
       <div class="action-bar">
         <button class="btn btn-primary" onclick="generateQuantitative()">⚙ Generate Results &amp; Figures</button>
         <button class="btn btn-secondary" onclick="clearQuantitative()">Clear All</button>
@@ -255,4 +278,5 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
