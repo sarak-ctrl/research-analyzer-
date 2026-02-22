@@ -3,13 +3,13 @@
    =================================================== */
 
 :root {
-  --ink: #1a1a2e;
-  --paper: #faf8f3;
-  --cream: #f0ebe0;
-  --accent: #8b5e3c;
-  --gold: #c9a84c;
-  --muted: #6b6560;
-  --border: #d9d0c1;
+  --ink: #2C422B;
+  --paper: #F9F5E6;
+  --cream: #e8e2d0;
+  --accent: #2C422B;
+  --gold: #4a7a47;
+  --muted: #4a6648;
+  --border: #c8d9c4;
   --card: #ffffff;
   --radius: 5px;
   --shadow: 0 2px 16px rgba(26,26,46,0.07);
@@ -18,7 +18,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Source Serif 4', serif;
+  font-family: Arial, sans-serif;
   background: var(--paper);
   color: var(--ink);
   min-height: 100vh;
@@ -41,7 +41,7 @@ header {
 }
 
 header h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 1.65rem;
   letter-spacing: -0.5px;
 }
@@ -51,7 +51,7 @@ header p { font-size: 0.78rem; color: #aaa; font-style: italic; margin-top: 0.1r
 .badge {
   background: var(--gold);
   color: var(--ink);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: Arial, sans-serif;
   font-size: 0.65rem;
   padding: 0.28rem 0.75rem;
   border-radius: 2px;
@@ -71,7 +71,7 @@ header p { font-size: 0.78rem; color: #aaa; font-style: italic; margin-top: 0.1r
 .tab {
   padding: 0.8rem 1.5rem;
   cursor: pointer;
-  font-family: 'Source Serif 4', serif;
+  font-family: Arial, sans-serif;
   font-size: 0.93rem;
   color: var(--muted);
   border: none;
@@ -95,7 +95,7 @@ main {
 
 .panel-intro { margin-bottom: 1.5rem; }
 .panel-intro h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 1.4rem;
   color: var(--accent);
   margin-bottom: 0.25rem;
@@ -113,7 +113,7 @@ main {
 }
 
 .section-title {
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 1rem;
   color: var(--accent);
   margin-bottom: 1rem;
@@ -176,7 +176,7 @@ textarea { resize: vertical; min-height: 72px; }
 }
 
 .item-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: Arial, sans-serif;
   font-size: 0.74rem;
   color: var(--accent);
   font-weight: 600;
@@ -248,7 +248,7 @@ textarea { resize: vertical; min-height: 72px; }
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  font-family: 'Source Serif 4', serif;
+  font-family: Arial, sans-serif;
   font-size: 0.9rem;
   transition: all 0.18s;
 }
@@ -266,7 +266,7 @@ textarea { resize: vertical; min-height: 72px; }
   border: none;
   padding: 0.45rem 1rem;
   font-size: 0.82rem;
-  font-family: 'Source Serif 4', serif;
+  font-family: Arial, sans-serif;
   border-radius: 3px;
   cursor: pointer;
   font-weight: 600;
@@ -291,7 +291,7 @@ textarea { resize: vertical; min-height: 72px; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: Arial, sans-serif;
   font-size: 0.72rem;
   color: var(--gold);
   letter-spacing: 0.6px;
@@ -303,7 +303,7 @@ textarea { resize: vertical; min-height: 72px; }
 .output-text {
   padding: 1.4rem 1.8rem;
   color: #ddd9d0;
-  font-family: 'Source Serif 4', serif;
+  font-family: Arial, sans-serif;
   font-size: 0.93rem;
   line-height: 1.9;
   white-space: pre-wrap;
@@ -317,7 +317,7 @@ textarea { resize: vertical; min-height: 72px; }
   padding: 0.8rem 0 0.8rem 0;
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--border);
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 1.05rem;
   color: var(--accent);
 }
@@ -348,7 +348,7 @@ textarea { resize: vertical; min-height: 72px; }
 }
 
 .chart-figure-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: Arial, sans-serif;
   font-size: 0.68rem;
   color: var(--gold);
   background: var(--ink);
@@ -359,7 +359,7 @@ textarea { resize: vertical; min-height: 72px; }
 }
 
 .chart-title {
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 0.92rem;
   color: var(--ink);
   text-align: center;
@@ -390,7 +390,7 @@ textarea { resize: vertical; min-height: 72px; }
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
-  font-family: 'Source Serif 4', serif;
+  font-family: Arial, sans-serif;
 }
 .download-chart-btn:hover { background: var(--cream); color: var(--accent); border-color: var(--accent); }
 
@@ -445,3 +445,4 @@ footer {
   .option-row { grid-template-columns: 1.5fr 1fr auto; }
   .charts-grid { grid-template-columns: 1fr; }
 }
+
