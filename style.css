@@ -45,7 +45,7 @@ header h1 {
   font-size: 1.65rem;
   letter-spacing: -0.5px;
 }
-header h1 span { color: var(--gold); }
+header h1 span { color: #aaaaaa; }
 header p { font-size: 0.78rem; color: #bbbbbb; font-style: italic; margin-top: 0.1rem; }
 
 .badge {
@@ -496,6 +496,7 @@ footer {
   border: none;
   cursor: pointer;
 }
+
 
 
 
